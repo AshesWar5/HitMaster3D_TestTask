@@ -1,0 +1,10 @@
+using UnityEngine;
+
+namespace Core.Infrastructures.Factories.UI
+{
+    public interface IUIElementFactory : IRemoveView
+    {
+        TTypeElement Create<TTypeElement>(UIElementType type, 
+            Vector3 pos = new Vector3(), Transform parent = null) where TTypeElement : ViewUI;
+    }
+}
