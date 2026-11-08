@@ -9,6 +9,7 @@ namespace Core.Logic.Battle
     {
         private readonly IGameFactory _gameFactory;
         private readonly BattlePlace[] _places;
+        private readonly List<BattlePlaceData> _placeDatas;
 
         private bool _isPreparedForBattle;
 
@@ -16,6 +17,7 @@ namespace Core.Logic.Battle
         {
             _gameFactory = gameFactory;
             _places = places;
+            _placeDatas = new List<BattlePlaceData>();
         }
 
         public IEnumerable<BattlePlaceData> Prepare()
@@ -23,7 +25,6 @@ namespace Core.Logic.Battle
             if(_isPreparedForBattle)
                 return null;
 
-            List<BattlePlaceData> placeDatas = new List<BattlePlaceData>();
             int lastNumberBattlePlace = 0;
             
             foreach (BattlePlace place in _places)
@@ -44,14 +45,31 @@ namespace Core.Logic.Battle
                     }
                 }
                 
-                placeDatas.Add(data);
-                
+                _placeDatas.Add(data);
+
                 lastNumberBattlePlace++;
             }
 
             _isPreparedForBattle = true;
 
-            return placeDatas;
+            return _placeDatas;
+        }
+
+        public void Clear()
+        {
+            foreach (BattlePlaceData data in _placeDatas)
+            {
+                foreach (EnemyComponent enemy in data.Enemies)
+                {
+                    if(enemy == null)
+                        continue;
+
+                    _gameFactory.Remove(enemy);
+                }
+            }
+
+            _placeDatas.Clear();
+            _isPreparedForBattle = false;
         }
     }
 }

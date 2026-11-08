@@ -1,26 +1,17 @@
-﻿using System;
-using UnityEngine;
-using Zenject;
+﻿using UnityEngine;
 
 namespace Core.Services.Input
 {
-    public sealed class StandaloneInputService : IInputService, ITickable
+    public sealed class StandaloneInputService : InputService
     {
-        public event Action<Vector3> ShootDirection;
-        
-        public void Tick()
+        private const int MOUSE_POINTER_ID = -1;
+
+        protected override bool TryGetPointerDownInternal(out Vector2 screenPoint, out int pointerId)
         {
-            if (UnityEngine.Input.GetMouseButtonDown(0))
-            {
-                Plane plane = new Plane(Camera.main.transform.forward,
-                    Camera.main.transform.position + new Vector3(0, 0, 15));
-                Ray ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
-                if (plane.Raycast(ray, out float distance))
-                {
-                    Vector3 v = ray.GetPoint(distance);
-                    ShootDirection?.Invoke(v);
-                }
-            }
+            screenPoint = UnityEngine.Input.mousePosition;
+            pointerId = MOUSE_POINTER_ID;
+
+            return UnityEngine.Input.GetMouseButtonDown(0);
         }
     }
 }

@@ -17,19 +17,17 @@ namespace Core.Logic.Bullet
 
         public override void Updating()
         {
-            if (IsActiveComponent)
-            {
-                if (_currentTimeLife < _maxTimeLife)
-                {
-                    _currentTimeLife += Time.deltaTime;
-                }
-                else
-                {
-                    ReturnToPool();
-                }
+            if(!IsActiveComponent)
+                return;
 
-                transform.position += transform.forward * _speed * Time.deltaTime;
+            if (_currentTimeLife >= _maxTimeLife)
+            {
+                ReturnToPool();
+                return;
             }
+
+            _currentTimeLife += Time.deltaTime;
+            transform.position += transform.forward * _speed * Time.deltaTime;
         }
 
         public void SetDamageValue(float value) =>
@@ -49,6 +47,9 @@ namespace Core.Logic.Bullet
 
         public void ReturnToPool()
         {
+            if(!IsActiveComponent || _pool is null)
+                return;
+
             _currentTimeLife = 0;
             _pool.ReturnToPool(this);
         }
@@ -57,16 +58,15 @@ namespace Core.Logic.Bullet
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other is not null)
+            if(!IsActiveComponent)
+                return;
+
+            if (other.TryGetComponent(out IHealth health))
             {
-                if (other.TryGetComponent(out IHealth health))
-                {
-                    health.SetDamage(_damage);
-                    ReturnToPool();
-                }
-                
-                ReturnToPool();
+                health.SetDamage(_damage);
             }
+
+            ReturnToPool();
         }
     }
 }

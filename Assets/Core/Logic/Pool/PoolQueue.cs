@@ -15,7 +15,11 @@
             _listObjects = new List<TObject>();
         }
 
-        public void Add(TObject obj) => obj.AssignPool(this);
+        public void Add(TObject obj)
+        {
+            obj.AssignPool(this);
+            _listObjects.Add(obj);
+        }
 
         public void Clear()
         {
@@ -27,7 +31,6 @@
         {
             obj.Disable();
             _inactiveObjects.Enqueue((TObject)obj);
-            _listObjects.Add((TObject)obj);
         }
 
         public bool HasInactiveObjects() => _inactiveObjects.Count > 0;
@@ -37,8 +40,8 @@
         public TObject GetInactiveObject()
         {
             var inactiveObject = _inactiveObjects.Dequeue();
-            _listObjects.Remove(inactiveObject);
             inactiveObject.Enable();
+
             return inactiveObject;
         }
     }

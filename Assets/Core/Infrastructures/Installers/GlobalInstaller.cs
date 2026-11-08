@@ -36,7 +36,11 @@ namespace Core.Infrastructures.Installers
 
         private void BindInputService()
         {
-            if (SystemInfo.deviceType == DeviceType.Desktop)
+            if (SystemInfo.deviceType == DeviceType.Handheld)
+            {
+                Container.BindInterfacesAndSelfTo<MobileInputService>().AsSingle();
+            }
+            else
             {
                 Container.BindInterfacesAndSelfTo<StandaloneInputService>().AsSingle();
             }

@@ -21,6 +21,7 @@ namespace Core.Logic.DemoGameFlow
 
         private LevelSpawner _levelSpawner;
         private PlayerSpawner _playerSpawner;
+        private BattlePreparation _battlePreparation;
         private GamePageHandler _gamePageHandler;
         private BattleManager _battleManager;
         private GamePageView _gamePageView;
@@ -45,8 +46,8 @@ namespace Core.Logic.DemoGameFlow
             
             _cameraFollow.SetTarget(player.transform);
 
-            var battlePreparation = new BattlePreparation(_gameFactory, level.BattlePlaces);
-            IEnumerable<BattlePlaceData> battlePlaceDatas = battlePreparation.Prepare();
+            _battlePreparation = new BattlePreparation(_gameFactory, level.BattlePlaces);
+            IEnumerable<BattlePlaceData> battlePlaceDatas = _battlePreparation.Prepare();
             _battleManager = new BattleManager(player, battlePlaceDatas, _gameStateMachine);
             _battleManager.Initialize();
             
@@ -60,6 +61,7 @@ namespace Core.Logic.DemoGameFlow
         {
             _gamePageHandler.Dispose();
             _battleManager.Dispose();
+            _battlePreparation.Clear();
             _playerSpawner.Remove();
             _levelSpawner.Remove();
             _pageService.Remove(_gamePageView);
