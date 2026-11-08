@@ -91,22 +91,20 @@ namespace Core.Infrastructures
 
         public void Show()
         {
-            try
-            {
-                gameObject.SetActive(true);
-                OnShow();
-            }
-            catch { }
+            if(this == null)
+                return;
+
+            gameObject.SetActive(true);
+            OnShow();
         }
 
         public void Hide()
         {
-            try
-            {
-                gameObject.SetActive(false);
-                OnHide();
-            }
-            catch { }
+            if(this == null)
+                return;
+
+            gameObject.SetActive(false);
+            OnHide();
         }
 
         private void Update()

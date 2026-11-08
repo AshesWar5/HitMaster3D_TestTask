@@ -126,17 +126,17 @@ namespace Core.Infrastructures.Factories.Game
 
         public void Remove(Component component)
         {
-            try
-            {
-                if (component is not null)
-                {
-                    _updatingService.UnRegister(component);
-                    _fixedUpdatingService.UnRegister(component);
-                    component.Dispose();
-                    _assetProvider.Destroy(component.gameObject);
-                }
-            }
-            catch { }
+            if(component is null)
+                return;
+
+            _updatingService.UnRegister(component);
+            _fixedUpdatingService.UnRegister(component);
+
+            if(component == null)
+                return;
+
+            component.Dispose();
+            _assetProvider.Destroy(component.gameObject);
         }
     }
 }

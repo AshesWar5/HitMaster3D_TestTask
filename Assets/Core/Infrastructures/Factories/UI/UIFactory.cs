@@ -48,20 +48,19 @@ namespace Core.Infrastructures.Factories.UI
 
         public void Remove(View view)
         {
-            try
+            if(view is null)
+                return;
+
+            if (view is PageView page)
             {
-                if (view is not null)
-                {
-                    if (view is PageView page)
-                    {
-                        _pages.Remove(page.Type);
-                    }
-                    
-                    view.Dispose();
-                    _assetProvider.Destroy(view.gameObject);
-                }
+                _pages.Remove(page.Type);
             }
-            catch { }
+
+            if(view == null)
+                return;
+
+            view.Dispose();
+            _assetProvider.Destroy(view.gameObject);
         }
 
         private string GetPathPage(PageType type)
