@@ -1,6 +1,6 @@
 ﻿using System;
 using Core.Infrastructures;
-using Core.Infrastructures.StateMachines.Game;
+using Core.Infrastructures.GameFlow;
 using Core.Logic.Battle;
 
 namespace Core.Logic.Game
@@ -8,14 +8,14 @@ namespace Core.Logic.Game
     public sealed class GamePageHandler : IInitialize, IDisposable
     {
         private readonly GamePageView _page;
-        private readonly GameStateMachine _stateMachine;
+        private readonly IGameRestart _gameRestart;
         private readonly IBattleStart _battle;
 
-        public GamePageHandler(GamePageView page, GameStateMachine stateMachine,
+        public GamePageHandler(GamePageView page, IGameRestart gameRestart,
             IBattleStart battle)
         {
             _page = page;
-            _stateMachine = stateMachine;
+            _gameRestart = gameRestart;
             _battle = battle;
         }
 
@@ -37,10 +37,7 @@ namespace Core.Logic.Game
             _page.UpdateVisibilityButtonStartGame(false);
         }
 
-        private void OnRestartGame()
-        {
-            _stateMachine.Dispose();
-            _stateMachine.Enter<BootstrapState>();
-        }
+        private void OnRestartGame() =>
+            _gameRestart.Restart();
     }
 }

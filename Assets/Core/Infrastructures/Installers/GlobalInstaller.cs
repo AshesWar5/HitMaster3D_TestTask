@@ -1,5 +1,6 @@
 ﻿using Core.Infrastructures.AssetManagement;
 using Core.Infrastructures.Factories.UI;
+using Core.Infrastructures.GameFlow;
 using Core.Infrastructures.Logger;
 using Core.Infrastructures.StateMachines;
 using Core.Infrastructures.StateMachines.Game;
@@ -25,6 +26,7 @@ namespace Core.Infrastructures.Installers
             BindPageController();
             BindStateMachineFactory();
             BindGameStateMachine();
+            BindGameRestart();
         }
 
         private void BindUpdateServices()
@@ -44,6 +46,11 @@ namespace Core.Infrastructures.Installers
             {
                 Container.BindInterfacesAndSelfTo<StandaloneInputService>().AsSingle();
             }
+        }
+
+        private void BindGameRestart()
+        {
+            Container.Bind<IGameRestart>().To<GameRestartService>().AsSingle();
         }
 
         private void BindLoggerService()

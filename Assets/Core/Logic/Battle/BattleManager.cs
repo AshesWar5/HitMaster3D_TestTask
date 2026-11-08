@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Infrastructures;
-using Core.Infrastructures.StateMachines.Game;
 using Core.Logic.Enemy;
 using Core.Logic.Player;
 
@@ -9,17 +8,16 @@ namespace Core.Logic.Battle
 {
     public sealed class BattleManager : IInitialize, IDisposable, IBattleStart
     {
+        public event Action Completed;
+
         private readonly IPlayerBattle _playerBattle;
-        private readonly GameStateMachine _gameStateMachine;
         private readonly Dictionary<int, BattlePlaceData> _commands;
 
         private int _currentIdBattlePlace;
 
-        public BattleManager(IPlayerBattle playerBattle, IEnumerable<BattlePlaceData> placeDatas,
-            GameStateMachine gameStateMachine)
+        public BattleManager(IPlayerBattle playerBattle, IEnumerable<BattlePlaceData> placeDatas)
         {
             _playerBattle = playerBattle;
-            _gameStateMachine = gameStateMachine;
 
             _commands = new Dictionary<int, BattlePlaceData>();
             foreach (BattlePlaceData data in placeDatas)
@@ -93,9 +91,8 @@ namespace Core.Logic.Battle
                 return false;
             }
 
-            _gameStateMachine.Dispose();
-            _gameStateMachine.Enter<BootstrapState>();
-            
+            Completed?.Invoke();
+
             return true;
         }
 
