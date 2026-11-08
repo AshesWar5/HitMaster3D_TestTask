@@ -1,0 +1,20 @@
+{
+    "name": "Core.App",
+    "rootNamespace": "Core.App",
+    "references": [
+        "Core.Infrastructures",
+        "Core.Services",
+        "UniTask",
+        "Zenject",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
