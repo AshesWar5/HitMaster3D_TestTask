@@ -4,7 +4,7 @@ using Core.Logic.Health;
 
 namespace Core.Logic.Enemy
 {
-    public class EnemyComponent : ActorComponent, IHealth
+    public class EnemyComponent : ActorComponent<EnemyAnimationHandler>, IHealth
     {
         public event Action<EnemyComponent> Death;
         

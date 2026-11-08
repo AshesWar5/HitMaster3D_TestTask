@@ -10,7 +10,7 @@ namespace Core.Logic.Player
         public void Enter()
         {
             _actor.Gun.Show();
-            _actor.GetAnimation<PlayerAnimationHandler>().PlayIdle();
+            _actor.Animation.PlayIdle();
         }
 
         public void Exit() => _actor.Gun.Hide();

@@ -19,7 +19,7 @@ namespace Core.Logic.Enemy
 
         public async void Enter()
         {
-            _actor.GetAnimation<EnemyAnimationHandler>().PlayDeath();
+            _actor.Animation.PlayDeath();
 
             _cancellationTokenSource = new CancellationTokenSource();
             bool isCanceled = await UniTask.Delay(DELAY_REMOVE_MS,

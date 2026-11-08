@@ -6,16 +6,20 @@ namespace Core.Logic.Actor
     public abstract class ActorComponent : Component
     {
         [SerializeField] private Animator _animator;
-        
-        private ActorAnimationHandler _actorAnimation;
 
         public Animator Animator => _animator;
+        public abstract ActorAnimationHandler ActorAnimation { get; }
+    }
 
-        public void SetAnimationHandler(ActorAnimationHandler handler) =>
-            _actorAnimation = handler;
+    public abstract class ActorComponent<TAnimationHandler> : ActorComponent
+        where TAnimationHandler : ActorAnimationHandler
+    {
+        private TAnimationHandler _animation;
 
-        public TAnimationHandler GetAnimation<TAnimationHandler>()
-            where TAnimationHandler : ActorAnimationHandler =>
-            _actorAnimation as TAnimationHandler;
+        public TAnimationHandler Animation => _animation;
+        public override ActorAnimationHandler ActorAnimation => _animation;
+
+        public void SetAnimationHandler(TAnimationHandler handler) =>
+            _animation = handler;
     }
 }

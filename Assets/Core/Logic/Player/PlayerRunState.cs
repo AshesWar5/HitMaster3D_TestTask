@@ -16,7 +16,7 @@ namespace Core.Logic.Player
             _currentTargetPosition = targetPosition;
             
             _actor.SetDestination(targetPosition);
-            _actor.GetAnimation<PlayerAnimationHandler>().PlayRun();
+            _actor.Animation.PlayRun();
         }
 
         protected override void OnUpdatingInternal()

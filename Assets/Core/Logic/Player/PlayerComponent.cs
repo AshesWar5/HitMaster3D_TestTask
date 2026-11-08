@@ -7,7 +7,7 @@ using Component = Core.Infrastructures.Component;
 
 namespace Core.Logic.Player
 {
-    public sealed class PlayerComponent : ActorComponent, IPlayerBattle
+    public sealed class PlayerComponent : ActorComponent<PlayerAnimationHandler>, IPlayerBattle
     {
         public event Action EndTargetMovement;
         

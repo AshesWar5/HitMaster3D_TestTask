@@ -9,7 +9,7 @@ namespace Core.Logic.Actor
         protected ActorIdleState(TStateMachine stateMachine) : base(stateMachine) { }
 
         public virtual void Enter() =>
-            _actor.GetAnimation<ActorAnimationHandler>().PlayIdle();
+            _actor.ActorAnimation.PlayIdle();
 
         public virtual void Exit() { }
     }
