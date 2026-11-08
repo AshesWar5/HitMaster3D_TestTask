@@ -21,8 +21,11 @@ namespace Core.Logic.Enemy
             _health.Death += OnDeath;
         }
 
-        protected override void OnDispose() =>
+        protected override void OnDispose()
+        {
             _health.Death -= OnDeath;
+            _stateMachine.Dispose();
+        }
         
         public void SetStateMachine(EnemyStateMachine stateMachine) =>
             _stateMachine = stateMachine;

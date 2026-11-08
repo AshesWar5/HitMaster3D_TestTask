@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Core.Infrastructures.Factories.Game;
 using Core.Logic.Enemy;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Core.Logic.Battle
 {
@@ -9,7 +11,7 @@ namespace Core.Logic.Battle
     {
         private readonly IGameFactory _gameFactory;
         private readonly BattlePlace[] _places;
-        private readonly List<BattlePlaceData> _placeDatas;
+        private readonly List<EnemyComponent> _enemies;
 
         private bool _isPreparedForBattle;
 
@@ -17,14 +19,16 @@ namespace Core.Logic.Battle
         {
             _gameFactory = gameFactory;
             _places = places;
-            _placeDatas = new List<BattlePlaceData>();
+            _enemies = new List<EnemyComponent>();
         }
 
         public IEnumerable<BattlePlaceData> Prepare()
         {
             if(_isPreparedForBattle)
-                return null;
+                throw new InvalidOperationException(
+                    $"{nameof(BattlePreparation)} is already prepared. Call {nameof(Clear)} first.");
 
+            List<BattlePlaceData> placeDatas = new List<BattlePlaceData>();
             int lastNumberBattlePlace = 0;
             
             foreach (BattlePlace place in _places)
@@ -42,33 +46,31 @@ namespace Core.Logic.Battle
                             place.PointsForSpawn[i].position, lastNumberBattlePlace);
                         
                         data.AddEnemy(instance);
+                        _enemies.Add(instance);
                     }
                 }
-                
-                _placeDatas.Add(data);
+
+                placeDatas.Add(data);
 
                 lastNumberBattlePlace++;
             }
 
             _isPreparedForBattle = true;
 
-            return _placeDatas;
+            return placeDatas;
         }
 
         public void Clear()
         {
-            foreach (BattlePlaceData data in _placeDatas)
+            for (int i = 0; i < _enemies.Count; i++)
             {
-                foreach (EnemyComponent enemy in data.Enemies)
-                {
-                    if(enemy == null)
-                        continue;
+                if(_enemies[i] == null)
+                    continue;
 
-                    _gameFactory.Remove(enemy);
-                }
+                _gameFactory.Remove(_enemies[i]);
             }
 
-            _placeDatas.Clear();
+            _enemies.Clear();
             _isPreparedForBattle = false;
         }
     }

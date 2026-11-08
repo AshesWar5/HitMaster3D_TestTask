@@ -1,4 +1,5 @@
-﻿using Core.Infrastructures.Factories.Game;
+﻿using System.Threading;
+using Core.Infrastructures.Factories.Game;
 using Core.Infrastructures.StateMachines;
 using Core.Logic.Actor;
 using Cysharp.Threading.Tasks;
@@ -7,20 +8,43 @@ namespace Core.Logic.Enemy
 {
     public sealed class EnemyDeathState : ActorState<EnemyStateMachine, EnemyComponent>, IState
     {
+        private const int DELAY_REMOVE_MS = 1500;
+
         private readonly IGameFactory _gameFactory;
+
+        private CancellationTokenSource _cancellationTokenSource;
+
         public EnemyDeathState(EnemyStateMachine stateMachine, IGameFactory gameFactory) :
             base(stateMachine) => _gameFactory = gameFactory;
-
-        protected override void OnDisposeInternal() =>
-            _gameFactory.Remove(_actor);
 
         public async void Enter()
         {
             _actor.GetAnimation<EnemyAnimationHandler>().PlayDeath();
-            await UniTask.Delay(1500);
-            _stateMachine.Dispose();
+
+            _cancellationTokenSource = new CancellationTokenSource();
+            bool isCanceled = await UniTask.Delay(DELAY_REMOVE_MS,
+                cancellationToken: _cancellationTokenSource.Token).SuppressCancellationThrow();
+
+            if(isCanceled)
+                return;
+
+            _gameFactory.Remove(_actor);
         }
 
-        public void Exit() { }
+        public void Exit() =>
+            CancelRemove();
+
+        private void CancelRemove()
+        {
+            if(_cancellationTokenSource is null)
+                return;
+
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+            _cancellationTokenSource = null;
+        }
+
+        protected override void OnDisposeInternal() =>
+            CancelRemove();
     }
 }
