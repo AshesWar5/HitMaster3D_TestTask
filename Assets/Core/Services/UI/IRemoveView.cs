@@ -1,4 +1,6 @@
-namespace Core.Infrastructures.Factories.UI
+using Core.Infrastructures;
+
+namespace Core.Services.UI
 {
     public interface IRemoveView
     {

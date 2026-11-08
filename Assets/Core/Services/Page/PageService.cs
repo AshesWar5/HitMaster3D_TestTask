@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Core.Infrastructures.Factories.UI;
+using Core.Services.UI;
 
 namespace Core.Services.Page
 {

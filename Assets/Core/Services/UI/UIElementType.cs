@@ -1,4 +1,4 @@
-namespace Core.Infrastructures.Factories.UI
+namespace Core.Services.UI
 {
     public enum UIElementType
     {

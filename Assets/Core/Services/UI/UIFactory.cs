@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.Infrastructures;
 using Core.Infrastructures.AssetManagement;
 using Core.Services.Page;
 using UnityEngine;
 
-namespace Core.Infrastructures.Factories.UI
+namespace Core.Services.UI
 {
     public sealed class UIFactory : IUIPageFactory, IUIElementFactory
     {

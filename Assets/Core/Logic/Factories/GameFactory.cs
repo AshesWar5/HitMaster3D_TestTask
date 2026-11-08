@@ -1,5 +1,4 @@
 ﻿using Core.Infrastructures.AssetManagement;
-using Core.Infrastructures.Factories.UI;
 using Core.Infrastructures.Logger;
 using Core.Infrastructures.Update;
 using Core.Logic.Bullet;
@@ -7,6 +6,7 @@ using Core.Logic.Enemy;
 using Core.Logic.Gun;
 using Core.Logic.Level;
 using Core.Logic.Player;
+using Core.Services.UI;
 using UnityEngine;
 using Component = Core.Infrastructures.Component;
 

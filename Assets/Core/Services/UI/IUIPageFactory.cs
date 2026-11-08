@@ -2,7 +2,7 @@
 using Core.Services.Page;
 using UnityEngine;
 
-namespace Core.Infrastructures.Factories.UI
+namespace Core.Services.UI
 {
     public interface IUIPageFactory : IRemoveView
     {

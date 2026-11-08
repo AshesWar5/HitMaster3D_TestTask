@@ -1,6 +1,7 @@
+using Core.Infrastructures;
 using UnityEngine;
 
-namespace Core.Infrastructures.Factories.UI
+namespace Core.Services.UI
 {
     public interface IUIElementFactory : IRemoveView
     {

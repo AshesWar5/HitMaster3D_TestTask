@@ -1,5 +1,4 @@
 ﻿using Core.Infrastructures.AssetManagement;
-using Core.Infrastructures.Factories.UI;
 using Core.Infrastructures.GameFlow;
 using Core.Infrastructures.Logger;
 using Core.Infrastructures.StateMachines;
@@ -7,6 +6,7 @@ using Core.Infrastructures.StateMachines.Game;
 using Core.Services.Input;
 using Core.Services.Page;
 using Core.Services.SceneLoader;
+using Core.Services.UI;
 using Core.Services.Update;
 using UnityEngine;
 using Zenject;
