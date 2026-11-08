@@ -65,6 +65,9 @@ namespace Core.Infrastructures
 
         public void Enter()
         {
+            if(!_isInitialized)
+                return;
+
             if (_isInitializeAllChildren)
             {
                 foreach (Component component in _components)
@@ -78,6 +81,9 @@ namespace Core.Infrastructures
 
         public void Exit()
         {
+            if(!_isInitialized)
+                return;
+
             if (_isInitializeAllChildren)
             {
                 foreach (Component component in _components)
