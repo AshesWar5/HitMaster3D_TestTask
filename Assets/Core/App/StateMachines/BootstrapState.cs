@@ -18,7 +18,7 @@ namespace Core.App.StateMachines
             _sceneLoader.Dispose();
 
         public void Enter() =>
-            _stateMachine.Enter<LoadLevelState, string>(NEXT_NAME_SCENE);
+            _stateMachine.Enter<LoadContentState, string>(NEXT_NAME_SCENE);
 
         public void Exit() { }
     }

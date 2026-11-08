@@ -72,6 +72,8 @@ namespace Core.Services.UI
             return type switch
             {
                 PageType.Game => AssetPath.GAME_PAGE,
+                PageType.Loading => AssetPath.LOADING_PAGE,
+                PageType.Error => AssetPath.ERROR_PAGE,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }

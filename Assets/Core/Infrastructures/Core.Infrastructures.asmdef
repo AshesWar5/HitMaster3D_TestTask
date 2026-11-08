@@ -2,7 +2,11 @@
     "name": "Core.Infrastructures",
     "rootNamespace": "Core.Infrastructures",
     "references": [
-        "Zenject"
+        "Zenject",
+        "UniTask",
+        "UniTask.Addressables",
+        "Unity.Addressables",
+        "Unity.ResourceManager"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
