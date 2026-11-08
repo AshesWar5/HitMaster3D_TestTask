@@ -23,6 +23,7 @@ namespace Core.App.Installers
             BindInputService();
             BindLoaderScene();
             BindAssetProvider();
+            BindAssetInstantiator();
             BindUIFactory();
             BindPageController();
             BindStateMachineFactory();
@@ -69,6 +70,14 @@ namespace Core.App.Installers
             Container
                 .Bind<IAssetProvider>()
                 .To<AssetProvider>()
+                .AsSingle();
+        }
+
+        private void BindAssetInstantiator()
+        {
+            Container
+                .Bind<IAssetInstantiator>()
+                .To<AssetInstantiator>()
                 .AsSingle();
         }
 

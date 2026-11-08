@@ -15,17 +15,19 @@ namespace Core.Logic.Factories
     public sealed class GameFactory : IGameFactory
     {
         private readonly IAssetProvider _assetProvider;
+        private readonly IAssetInstantiator _assetInstantiator;
         private readonly IUpdatingService _updatingService;
         private readonly IFixedUpdatingService _fixedUpdatingService;
         private readonly LevelsConfig _levelsConfig;
         private readonly IUIElementFactory _uiElementFactory;
         private readonly ILoggerService _logger;
 
-        public GameFactory(IAssetProvider assetProvider, IUpdatingService updatingService,
-            IFixedUpdatingService fixedUpdatingService, LevelsConfig levelsConfig,
-            IUIElementFactory uiElementFactory, ILoggerService logger)
+        public GameFactory(IAssetProvider assetProvider, IAssetInstantiator assetInstantiator,
+            IUpdatingService updatingService, IFixedUpdatingService fixedUpdatingService,
+            LevelsConfig levelsConfig, IUIElementFactory uiElementFactory, ILoggerService logger)
         {
             _assetProvider = assetProvider;
+            _assetInstantiator = assetInstantiator;
             _updatingService = updatingService;
             _fixedUpdatingService = fixedUpdatingService;
             _levelsConfig = levelsConfig;
@@ -36,7 +38,8 @@ namespace Core.Logic.Factories
         public PlayerComponent CreatePlayer(Vector2 pos, PlayerConfig config)
         {
             var scaleVector = new Vector3(config.Scale, config.Scale, config.Scale);
-            var player = _assetProvider.Instantiate<PlayerComponent>(AssetPath.PLAYER, pos, scaleVector);
+            var prefab = _assetProvider.Load<PlayerComponent>(AssetPath.PLAYER);
+            var player = _assetInstantiator.Instantiate(prefab, null, pos, scaleVector);
             
             var stateMachine = new PlayerStateMachine(new PlayerStateFactory(), _logger, _updatingService,
                 _fixedUpdatingService, player);
@@ -58,7 +61,7 @@ namespace Core.Logic.Factories
         public LevelComponent CreateLevel()
         {
             int index = Random.Range(0, _levelsConfig.Levels.Length);
-            LevelComponent instance = _assetProvider.Instantiate(_levelsConfig.Levels[index], null,
+            LevelComponent instance = _assetInstantiator.Instantiate(_levelsConfig.Levels[index], null,
                 Vector3.zero, Vector3.one);
             instance.Initialize();
             instance.Enter();
@@ -72,7 +75,7 @@ namespace Core.Logic.Factories
             where TEnemy : EnemyComponent
         {
             Vector3 scale = new Vector3(config.Scale, config.Scale, config.Scale);
-            var enemy = _assetProvider.Instantiate(config.Prefab, null, position, scale).GetComponent<TEnemy>();
+            var enemy = _assetInstantiator.Instantiate(config.Prefab, null, position, scale).GetComponent<TEnemy>();
             
             var stateMachine = new EnemyStateMachine(new EnemyStateFactory(this), _logger, _updatingService,
                 _fixedUpdatingService, enemy);
@@ -98,7 +101,7 @@ namespace Core.Logic.Factories
             where TGun : GunComponent
         {
             Vector3 scale = new Vector3(config.Scale, config.Scale, config.Scale);
-            var gun = _assetProvider.Instantiate(config.Prefab, parent, position, scale).GetComponent<TGun>();
+            var gun = _assetInstantiator.Instantiate(config.Prefab, parent, position, scale).GetComponent<TGun>();
             gun.transform.eulerAngles = rotation;
             
             gun.SetDataByBullet(config.SpeedBullet, config.BulletConfig);
@@ -114,7 +117,7 @@ namespace Core.Logic.Factories
             where TBullet : BulletComponent
         {
             Vector3 scale = new Vector3(config.Scale, config.Scale, config.Scale);
-            var bullet = _assetProvider.Instantiate(config.Prefab, null, position, scale).GetComponent<TBullet>();
+            var bullet = _assetInstantiator.Instantiate(config.Prefab, null, position, scale).GetComponent<TBullet>();
             
             bullet.SetDamageValue(config.Damage);
             bullet.Initialize();
@@ -137,7 +140,7 @@ namespace Core.Logic.Factories
                 return;
 
             component.Dispose();
-            _assetProvider.Destroy(component.gameObject);
+            _assetInstantiator.Destroy(component.gameObject);
         }
     }
 }

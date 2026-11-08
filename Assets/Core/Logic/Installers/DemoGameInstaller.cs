@@ -15,7 +15,7 @@ namespace Core.Logic.Installers
         public override void InstallBindings()
         {
             BindCameraFollow();
-            BindAssetProvider();
+            BindAssetInstantiator();
             BindGameFactory();
             BindGameFlowManager();
         }
@@ -25,11 +25,11 @@ namespace Core.Logic.Installers
             Container.Bind<IGameFactory>().To<GameFactory>().AsSingle();
         }
         
-        private void BindAssetProvider()
+        private void BindAssetInstantiator()
         {
             Container
-                .Bind<IAssetProvider>()
-                .To<AssetProvider>()
+                .Bind<IAssetInstantiator>()
+                .To<AssetInstantiator>()
                 .AsSingle();
         }
 
