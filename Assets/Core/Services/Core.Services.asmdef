@@ -5,7 +5,8 @@
         "Core.Infrastructures",
         "UniTask",
         "Zenject",
-        "UnityEngine.UI"
+        "UnityEngine.UI",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

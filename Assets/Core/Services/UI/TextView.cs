@@ -2,7 +2,7 @@ using Core.Infrastructures;
 using TMPro;
 using UnityEngine;
 
-namespace Core.Logic
+namespace Core.Services.UI
 {
     public class TextView : ViewUI
     {

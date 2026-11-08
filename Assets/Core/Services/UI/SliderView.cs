@@ -3,7 +3,7 @@ using Core.Infrastructures;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Logic
+namespace Core.Services.UI
 {
     public class SliderView : ViewUI
     {
