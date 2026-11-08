@@ -8,10 +8,11 @@ namespace Core.Logic.Actor
         where TStateMachine : ActorStateMachine<TStateMachine, TActorComponent>
         where TActorComponent : ActorComponent
     {
-        public TActorComponent Actor { get; protected set; }
+        public TActorComponent Actor { get; }
 
-        protected ActorStateMachine(IStateFactory stateFactory, ILoggerService logger,
-            IUpdatingService updatingService, IFixedUpdatingService fixedUpdatingService) :
-            base(stateFactory, logger, updatingService, fixedUpdatingService) { }
+        protected ActorStateMachine(IStateFactory<TStateMachine> stateFactory, ILoggerService logger,
+            IUpdatingService updatingService, IFixedUpdatingService fixedUpdatingService, TActorComponent actor) :
+            base(stateFactory, logger, updatingService, fixedUpdatingService) =>
+            Actor = actor;
     }
 }

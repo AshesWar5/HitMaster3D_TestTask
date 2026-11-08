@@ -38,7 +38,7 @@ namespace Core.Logic.Factories
             var scaleVector = new Vector3(config.Scale, config.Scale, config.Scale);
             var player = _assetProvider.Instantiate<PlayerComponent>(AssetPath.PLAYER, pos, scaleVector);
             
-            var stateMachine = new PlayerStateMachine(null, _logger, _updatingService,
+            var stateMachine = new PlayerStateMachine(new PlayerStateFactory(), _logger, _updatingService,
                 _fixedUpdatingService, player);
 
             var gun = CreateGun<GunComponent>(config.Gun, player.transform, player.PointSpawnGun.localPosition,
@@ -74,8 +74,8 @@ namespace Core.Logic.Factories
             Vector3 scale = new Vector3(config.Scale, config.Scale, config.Scale);
             var enemy = _assetProvider.Instantiate(config.Prefab, null, position, scale).GetComponent<TEnemy>();
             
-            var stateMachine = new EnemyStateMachine(null, _logger, _updatingService,
-                _fixedUpdatingService, enemy, this);
+            var stateMachine = new EnemyStateMachine(new EnemyStateFactory(this), _logger, _updatingService,
+                _fixedUpdatingService, enemy);
             
             var animationHandler = new EnemyAnimationHandler(enemy.Animator);
 

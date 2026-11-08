@@ -75,17 +75,13 @@ namespace Core.App.Installers
         private void BindStateMachineFactory()
         {
             Container
-                .Bind<IStateFactory>()
-                .To<StateFactory>()
+                .Bind<IStateFactory<GameStateMachine>>()
+                .To<GameStateFactory>()
                 .AsSingle();
         }
 
         private void BindGameStateMachine()
         {
-            Container.Bind<BootstrapState>().AsSingle();
-            Container.Bind<LoadLevelState>().AsSingle();
-            Container.Bind<GameLoopState>().AsSingle();
-
             Container.BindInterfacesAndSelfTo<GameStateMachine>().AsSingle();
         }
         

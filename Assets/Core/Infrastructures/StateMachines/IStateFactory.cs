@@ -1,7 +1,7 @@
 ﻿namespace Core.Infrastructures.StateMachines
 {
-    public interface IStateFactory
+    public interface IStateFactory<TStateMachine>
     {
-        T CreateState<T>() where T : IExitableState;
+        TState CreateState<TState>(TStateMachine stateMachine) where TState : IExitableState;
     }
 }

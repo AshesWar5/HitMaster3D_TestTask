@@ -1,6 +1,5 @@
 ﻿using Core.Infrastructures.AssetManagement;
 using Core.Infrastructures.GameFlow;
-using Core.Infrastructures.StateMachines;
 using Core.Logic.Camera;
 using Core.Logic.DemoGameFlow;
 using Core.Logic.Factories;
@@ -18,16 +17,7 @@ namespace Core.Logic.Installers
             BindCameraFollow();
             BindAssetProvider();
             BindGameFactory();
-            BindStateMachineFactory();
             BindGameFlowManager();
-        }
-
-        private void BindStateMachineFactory()
-        {
-            Container
-                .Bind<IStateFactory>()
-                .To<StateFactory>()
-                .AsSingle();
         }
 
         private void BindGameFactory()

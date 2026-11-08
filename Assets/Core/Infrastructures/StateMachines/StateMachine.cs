@@ -7,21 +7,22 @@ namespace Core.Infrastructures.StateMachines
 {
     public abstract class StateMachine<FSM> : IStateMachine<FSM> where FSM : class, IStateMachine<FSM>
     {
-        private readonly IStateFactory _stateFactory;
+        private readonly IStateFactory<FSM> _stateFactory;
         private readonly ILoggerService _logger;
         private readonly IUpdatingService _updatingService;
         private readonly IFixedUpdatingService _fixedUpdatingService;
-        protected Dictionary<Type, State<FSM>> _states;
+        private readonly Dictionary<Type, State<FSM>> _states;
         private IExitableState _activeState;
         private State<FSM> _currentState;
 
-        protected StateMachine(IStateFactory stateFactory, ILoggerService logger,
+        protected StateMachine(IStateFactory<FSM> stateFactory, ILoggerService logger,
             IUpdatingService updatingService, IFixedUpdatingService fixedUpdatingService)
         {
             _stateFactory = stateFactory;
             _logger = logger;
             _updatingService = updatingService;
             _fixedUpdatingService = fixedUpdatingService;
+            _states = new Dictionary<Type, State<FSM>>();
         }
 
         public void Enter<TState>() where TState : State<FSM>, IState
@@ -55,7 +56,7 @@ namespace Core.Infrastructures.StateMachines
                 {
                     _updatingService.UnRegister(state);
                     _fixedUpdatingService.UnRegister(state);
-                    state?.Dispose();
+                    state.Dispose();
                 }
             }
             
@@ -80,8 +81,12 @@ namespace Core.Infrastructures.StateMachines
 
         private TState GetState<TState>() where TState : State<FSM>, IExitableState
         {
-            var state = _states[typeof(TState)] as TState ?? _stateFactory.CreateState<TState>();
-            _states[typeof(TState)] = state;
+            if(_states.TryGetValue(typeof(TState), out State<FSM> cachedState))
+                return (TState)cachedState;
+
+            var state = _stateFactory.CreateState<TState>(this as FSM);
+            _states.Add(typeof(TState), state);
+
             return state;
         }
     }
