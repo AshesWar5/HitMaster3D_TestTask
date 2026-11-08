@@ -8,8 +8,9 @@ using Core.Logic.Level;
 using Core.Logic.Player;
 using Core.Services.Update;
 using UnityEngine;
+using Component = Core.Infrastructures.Component;
 
-namespace Core.Infrastructures.Factories.Game
+namespace Core.Logic.Factories
 {
     public sealed class GameFactory : IGameFactory
     {

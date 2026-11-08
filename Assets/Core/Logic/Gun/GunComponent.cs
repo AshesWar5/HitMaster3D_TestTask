@@ -1,5 +1,5 @@
-﻿using Core.Infrastructures.Factories.Game;
-using Core.Logic.Bullet;
+﻿using Core.Logic.Bullet;
+using Core.Logic.Factories;
 using Core.Logic.Pool;
 using Core.Services.Input;
 using UnityEngine;

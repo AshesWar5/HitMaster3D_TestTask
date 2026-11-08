@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Infrastructures.Factories.Game;
 using Core.Infrastructures.Logger;
 using Core.Infrastructures.StateMachines;
 using Core.Logic.Actor;
+using Core.Logic.Factories;
 using Core.Services.Update;
 
 namespace Core.Logic.Enemy

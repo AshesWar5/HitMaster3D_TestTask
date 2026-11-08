@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Core.Infrastructures.Factories.Game;
 using Core.Infrastructures.GameFlow;
 using Core.Logic.Battle;
 using Core.Logic.Camera;
+using Core.Logic.Factories;
 using Core.Logic.Game;
 using Core.Logic.Level;
 using Core.Logic.Player;

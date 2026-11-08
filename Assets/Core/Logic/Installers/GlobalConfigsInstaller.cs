@@ -3,7 +3,7 @@ using Core.Logic.Player;
 using UnityEngine;
 using Zenject;
 
-namespace Core.Infrastructures.Installers
+namespace Core.Logic.Installers
 {
     [CreateAssetMenu(fileName = "Global Configs Installer",
         menuName = "Installers/Configs/Global")]

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Infrastructures.Factories.Game;
 using Core.Logic.Enemy;
+using Core.Logic.Factories;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

@@ -1,7 +1,7 @@
 ﻿using System.Threading;
-using Core.Infrastructures.Factories.Game;
 using Core.Infrastructures.StateMachines;
 using Core.Logic.Actor;
+using Core.Logic.Factories;
 using Cysharp.Threading.Tasks;
 
 namespace Core.Logic.Enemy

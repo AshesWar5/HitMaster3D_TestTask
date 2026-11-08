@@ -1,13 +1,13 @@
 ﻿using Core.Infrastructures.AssetManagement;
-using Core.Infrastructures.Factories.Game;
 using Core.Infrastructures.GameFlow;
 using Core.Infrastructures.StateMachines;
 using Core.Logic.Camera;
 using Core.Logic.DemoGameFlow;
+using Core.Logic.Factories;
 using UnityEngine;
 using Zenject;
 
-namespace Core.Infrastructures.Installers
+namespace Core.Logic.Installers
 {
     public class DemoGameInstaller : MonoInstaller
     {

@@ -1,5 +1,5 @@
 ﻿using Core.Infrastructures;
-using Core.Infrastructures.Factories.Game;
+using Core.Logic.Factories;
 
 namespace Core.Logic.Spawner
 {

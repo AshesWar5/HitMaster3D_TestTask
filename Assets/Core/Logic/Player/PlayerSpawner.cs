@@ -1,4 +1,4 @@
-﻿using Core.Infrastructures.Factories.Game;
+﻿using Core.Logic.Factories;
 using Core.Logic.Spawner;
 using UnityEngine;
 

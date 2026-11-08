@@ -1,11 +1,12 @@
-﻿using Core.Logic.Bullet;
+﻿using Core.Infrastructures.Factories.Game;
+using Core.Logic.Bullet;
 using Core.Logic.Enemy;
 using Core.Logic.Gun;
 using Core.Logic.Level;
 using Core.Logic.Player;
 using UnityEngine;
 
-namespace Core.Infrastructures.Factories.Game
+namespace Core.Logic.Factories
 {
     public interface IGameFactory : IRemoveObject
     {
