@@ -45,10 +45,7 @@ namespace Core.Infrastructures.Factories.Game
             
             var animationHandler = new PlayerAnimationHandler(player.Animator);
             
-            player.SetAnimationHandler(animationHandler);
-            player.SetStateMachine(stateMachine);
-            player.SetSpeed(config.Speed);
-            player.SetGun(gun);
+            player.Setup(stateMachine, animationHandler, gun, config.Speed);
             player.Initialize();
             player.Enter();
             _updatingService.Register(player);
@@ -87,10 +84,7 @@ namespace Core.Infrastructures.Factories.Game
             var healthHandler = new EnemyHealthHandler(config.Health, healthView);
             healthHandler.Initialize();
             
-            enemy.SetAnimationHandler(animationHandler);
-            enemy.SetStateMachine(stateMachine);
-            enemy.SetIdBattlePlace(idBattlePlace);
-            enemy.SetHealth(healthHandler);
+            enemy.Setup(stateMachine, animationHandler, healthHandler, idBattlePlace);
             enemy.Initialize();
             enemy.Enter();
             _updatingService.Register(enemy);

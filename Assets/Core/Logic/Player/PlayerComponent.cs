@@ -27,14 +27,14 @@ namespace Core.Logic.Player
         protected override void OnDispose() =>
             _stateMachine.Dispose();
 
-        public void SetStateMachine(PlayerStateMachine stateMachine) =>
+        public void Setup(PlayerStateMachine stateMachine, PlayerAnimationHandler animationHandler,
+            GunComponent gun, float speed)
+        {
             _stateMachine = stateMachine;
-
-        public void SetSpeed(float speed) =>
-            _navMeshAgent.speed = speed;
-
-        public void SetGun(GunComponent gun) =>
+            SetAnimationHandler(animationHandler);
             _gun = gun;
+            _navMeshAgent.speed = speed;
+        }
 
         public void Move(Vector3 targetPosition) =>
             _stateMachine.Enter<PlayerRunState, Vector3>(targetPosition);

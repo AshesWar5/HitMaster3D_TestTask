@@ -19,7 +19,7 @@ namespace Core.Logic.Actor
         public TAnimationHandler Animation => _animation;
         public override ActorAnimationHandler ActorAnimation => _animation;
 
-        public void SetAnimationHandler(TAnimationHandler handler) =>
+        protected void SetAnimationHandler(TAnimationHandler handler) =>
             _animation = handler;
     }
 }

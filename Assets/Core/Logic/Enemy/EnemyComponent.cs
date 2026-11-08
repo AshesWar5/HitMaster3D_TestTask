@@ -27,14 +27,14 @@ namespace Core.Logic.Enemy
             _stateMachine.Dispose();
         }
         
-        public void SetStateMachine(EnemyStateMachine stateMachine) =>
+        public void Setup(EnemyStateMachine stateMachine, EnemyAnimationHandler animationHandler,
+            ActorHealth health, int idBattlePlace)
+        {
             _stateMachine = stateMachine;
-
-        public void SetIdBattlePlace(int id) =>
-            _idBattlePlace = id;
-
-        public void SetHealth(ActorHealth health) =>
+            SetAnimationHandler(animationHandler);
             _health = health;
+            _idBattlePlace = idBattlePlace;
+        }
 
         public void SetDamage(float damage) =>
             _health.SetDamage(damage);
