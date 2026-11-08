@@ -1,7 +1,8 @@
-using Core.Infrastructures.StateMachines.Game;
+using Core.App.StateMachines;
+using Core.Infrastructures.GameFlow;
 using Cysharp.Threading.Tasks;
 
-namespace Core.Infrastructures.GameFlow
+namespace Core.App.GameFlow
 {
     public sealed class GameRestartService : IGameRestart
     {

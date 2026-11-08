@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Infrastructures.Logger;
+using Core.Infrastructures.StateMachines;
 using Core.Infrastructures.Update;
 
-namespace Core.Infrastructures.StateMachines.Game
+namespace Core.App.StateMachines
 {
     public sealed class GameStateMachine : StateMachine<GameStateMachine>
     {

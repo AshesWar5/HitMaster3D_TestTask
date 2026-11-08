@@ -1,11 +1,11 @@
 ﻿using System.Globalization;
 using System.Threading;
-using Core.Infrastructures.StateMachines.Game;
+using Core.App.StateMachines;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace Core.Infrastructures.Bootstrap
+namespace Core.App.Bootstrap
 {
     public sealed class Bootstrap : MonoBehaviour
     {

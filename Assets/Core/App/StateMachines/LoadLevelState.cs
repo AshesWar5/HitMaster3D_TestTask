@@ -1,9 +1,10 @@
 ﻿using Core.Infrastructures.GameFlow;
+using Core.Infrastructures.StateMachines;
 using Core.Services.SceneLoader;
 using UnityEngine;
 using Zenject;
 
-namespace Core.Infrastructures.StateMachines.Game
+namespace Core.App.StateMachines
 {
     public sealed class LoadLevelState : State<GameStateMachine>, IPayLoadedState<string>
     {

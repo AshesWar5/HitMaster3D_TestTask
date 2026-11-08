@@ -1,6 +1,7 @@
-﻿using Core.Services.SceneLoader;
+﻿using Core.Infrastructures.StateMachines;
+using Core.Services.SceneLoader;
 
-namespace Core.Infrastructures.StateMachines.Game
+namespace Core.App.StateMachines
 {
     public sealed class BootstrapState : State<GameStateMachine>, IState
     {

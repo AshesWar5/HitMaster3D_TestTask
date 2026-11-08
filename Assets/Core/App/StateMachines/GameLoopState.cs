@@ -1,6 +1,7 @@
 ﻿using Core.Infrastructures.GameFlow;
+using Core.Infrastructures.StateMachines;
 
-namespace Core.Infrastructures.StateMachines.Game
+namespace Core.App.StateMachines
 {
     public sealed class GameLoopState : State<GameStateMachine>, IPayLoadedState<IGameFlow>
     {
