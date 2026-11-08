@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Core.Infrastructures.Logger;
 using Core.Infrastructures.StateMachines;
+using Core.Infrastructures.Update;
 using Core.Logic.Actor;
-using Core.Services.Update;
 
 namespace Core.Logic.Player
 {

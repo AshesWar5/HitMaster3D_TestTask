@@ -1,4 +1,4 @@
-using Core.Services.Update;
+using Core.Infrastructures.Update;
 
 namespace Core.Infrastructures
 {

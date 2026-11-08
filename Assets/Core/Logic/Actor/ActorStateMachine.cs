@@ -1,6 +1,6 @@
 ﻿using Core.Infrastructures.Logger;
 using Core.Infrastructures.StateMachines;
-using Core.Services.Update;
+using Core.Infrastructures.Update;
 
 namespace Core.Logic.Actor
 {

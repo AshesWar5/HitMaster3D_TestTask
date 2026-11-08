@@ -1,6 +1,6 @@
 ﻿using Core.Infrastructures;
 
-namespace Core.Services.Update
+namespace Core.Infrastructures.Update
 {
     public interface ILateUpdatingService : IUpdateService<ILateUpdating> { }
 }

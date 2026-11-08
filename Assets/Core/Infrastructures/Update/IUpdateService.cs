@@ -1,4 +1,4 @@
-﻿namespace Core.Services.Update
+﻿namespace Core.Infrastructures.Update
 {
     public interface IUpdateService<T> where T : IUpdate
     {

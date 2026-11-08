@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.Infrastructures.Update;
 using Zenject;
 
 namespace Core.Services.Update

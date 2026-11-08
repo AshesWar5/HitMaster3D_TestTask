@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Infrastructures.Logger;
-using Core.Services.Update;
+using Core.Infrastructures.Update;
 
 namespace Core.Infrastructures.StateMachines
 {
