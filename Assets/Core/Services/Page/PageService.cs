@@ -21,7 +21,7 @@ namespace Core.Services.Page
         public TPage Create<TPage>(PageType type) where TPage : PageView
         {
             PageView page = InstantiatePage(type);
-            if (page is not null)
+            if (page != null)
             {
                 if (!page.IsFree)
                 {
@@ -48,7 +48,7 @@ namespace Core.Services.Page
             bool isOpenPage = false)
         {
             PageView page = InstantiatePage(type);
-            if (page is not null && page.IsFree == isFree)
+            if (page != null && page.IsFree == isFree)
             {
                 page.Hide();
                 page.Exit();
@@ -81,7 +81,7 @@ namespace Core.Services.Page
         private void Open(PageType type, bool isClosePage)
         {
             PageView page = InstantiatePage(type);
-            if (page is not null)
+            if (page != null)
             {
                 if (!page.IsFree)
                 {

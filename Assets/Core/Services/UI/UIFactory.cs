@@ -26,14 +26,16 @@ namespace Core.Services.UI
             Transform parent = null)
         {
             _pages.TryGetValue(type, out PageView page);
-            if (page is not null)
+            if (page != null)
             {
                 if(!page.IsInitialized)
                     page.Initialize();
-                
+
                 return page as TypePage;
             }
-            
+
+            _pages.Remove(type);
+
             var prefab = GetPage<TypePage>(type);
             var instance = _assetInstantiator.Instantiate(prefab, parent, pos, Vector3.one);
             instance.Initialize();

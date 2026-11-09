@@ -24,10 +24,10 @@ namespace Core.Infrastructures.AssetManagement
 
         public void Destroy(Object obj)
         {
-            if (obj is not null)
-            {
-                Object.Destroy(obj);
-            }
+            if(obj == null)
+                return;
+
+            Object.Destroy(obj);
         }
     }
 }

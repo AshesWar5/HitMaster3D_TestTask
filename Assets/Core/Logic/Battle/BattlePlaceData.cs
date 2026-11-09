@@ -27,8 +27,6 @@ namespace Core.Logic.Battle
             CenterPositionBattlePoint = centerPositionBattlePoint;
             _enemies = new List<EnemyComponent>();
         }
-        
-        ~BattlePlaceData() => _enemies = null;
 
         public void AddEnemy(EnemyComponent enemy)
         {
