@@ -4,6 +4,7 @@ using Core.Infrastructures.AssetManagement;
 using Core.Infrastructures.GameFlow;
 using Core.Infrastructures.Logger;
 using Core.Infrastructures.StateMachines;
+using Core.Services.ContentLoading;
 using Core.Services.Input;
 using Core.Services.Page;
 using Core.Services.SceneLoader;
@@ -26,6 +27,7 @@ namespace Core.App.Installers
             BindAssetInstantiator();
             BindUIFactory();
             BindPageController();
+            BindContentLoadingService();
             BindStateMachineFactory();
             BindGameStateMachine();
             BindGameRestart();
@@ -102,6 +104,11 @@ namespace Core.App.Installers
         private void BindPageController()
         {
             Container.Bind<IPageService>().To<PageService>().AsSingle();
+        }
+
+        private void BindContentLoadingService()
+        {
+            Container.Bind<IContentLoadingService>().To<ContentLoadingService>().AsSingle();
         }
     }
 }
