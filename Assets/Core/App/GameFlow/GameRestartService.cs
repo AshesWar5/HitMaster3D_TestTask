@@ -13,19 +13,27 @@ namespace Core.App.GameFlow
         public GameRestartService(GameStateMachine gameStateMachine) =>
             _gameStateMachine = gameStateMachine;
 
-        public async void Restart()
+        public void Restart() =>
+            RestartAsync().Forget();
+
+        private async UniTask RestartAsync()
         {
             if(_isRestarting)
                 return;
 
             _isRestarting = true;
 
-            await UniTask.Yield();
+            try
+            {
+                await UniTask.Yield();
 
-            _gameStateMachine.Dispose();
-            _gameStateMachine.Enter<BootstrapState>();
-
-            _isRestarting = false;
+                _gameStateMachine.Dispose();
+                _gameStateMachine.Enter<BootstrapState>();
+            }
+            finally
+            {
+                _isRestarting = false;
+            }
         }
     }
 }

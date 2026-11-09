@@ -1,6 +1,7 @@
 ﻿using Core.Infrastructures.AssetManagement;
 using Core.Infrastructures.StateMachines;
 using Core.Services.ContentLoading;
+using Cysharp.Threading.Tasks;
 
 namespace Core.App.StateMachines
 {
@@ -13,7 +14,12 @@ namespace Core.App.StateMachines
         public LoadContentState(GameStateMachine stateMachine, IContentLoadingService contentLoading) :
             base(stateMachine) => _contentLoading = contentLoading;
 
-        public async void Enter(string sceneName)
+        public void Enter(string sceneName) =>
+            EnterAsync(sceneName).Forget();
+
+        public void Exit() { }
+
+        private async UniTask EnterAsync(string sceneName)
         {
             if (!_isContentLoaded)
             {
@@ -23,7 +29,5 @@ namespace Core.App.StateMachines
 
             _stateMachine.Enter<LoadLevelState, string>(sceneName);
         }
-
-        public void Exit() { }
     }
 }

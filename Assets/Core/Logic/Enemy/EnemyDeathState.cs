@@ -17,22 +17,27 @@ namespace Core.Logic.Enemy
         public EnemyDeathState(EnemyStateMachine stateMachine, IGameFactory gameFactory) :
             base(stateMachine) => _gameFactory = gameFactory;
 
-        public async void Enter()
+        public void Enter()
         {
             _actor.Animation.PlayDeath();
 
             _cancellationTokenSource = new CancellationTokenSource();
+            RemoveAfterDelayAsync(_cancellationTokenSource.Token).Forget();
+        }
+
+        public void Exit() =>
+            CancelRemove();
+
+        private async UniTask RemoveAfterDelayAsync(CancellationToken cancellationToken)
+        {
             bool isCanceled = await UniTask.Delay(DELAY_REMOVE_MS,
-                cancellationToken: _cancellationTokenSource.Token).SuppressCancellationThrow();
+                cancellationToken: cancellationToken).SuppressCancellationThrow();
 
             if(isCanceled)
                 return;
 
             _gameFactory.Remove(_actor);
         }
-
-        public void Exit() =>
-            CancelRemove();
 
         private void CancelRemove()
         {
