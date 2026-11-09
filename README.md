@@ -55,6 +55,15 @@ Bootstrap → BootstrapState → LoadContentState → LoadLevelState → GameLoo
 - **Single object lifecycle.** `Initialize → Enter → … → Exit → Dispose` on the `Component` base class, cascading to child components.
 - **DI.** `GlobalInstaller` (ProjectContext) holds services for the whole session. `DemoGameInstaller` (SceneContext of `Main`) holds the scene's objects. Domain objects (spawners, `BattleManager`, handlers) are created with `new` inside the flow and factories.
 
+## Improvements after the test task
+
+- **Layers as assemblies.** Code is split into `Infrastructures` / `Services` / `App` / `Logic` asmdefs, and dependencies go one way only. Game-specific factories and installers moved out of `Infrastructures` into `Logic`.
+- **Addressables.** Content is split into groups and labels and preloaded behind a loading page, with an error page and Retry on failure. `Tools/Addressables/Setup` and `Analyze` build and check the groups.
+- **Restart outside the domain.** `BattleManager` no longer restarts the game itself. `GameRestartService` does it through `IGameRestart`.
+- **State factories.** States are created lazily through a separate factory for each state machine instead of being registered up front.
+- **Bug fixes.** Bullet pooling, enemy cleanup on restart, mobile input, and cancelling the enemy removal delay when the enemy is disposed.
+- **Code cleanup.** Empty `catch` blocks were replaced with destroyed object checks, `async void` was replaced with UniTask, actor dependencies are passed through one `Setup` call, and the project is upgraded to Unity 6.
+
 ## Structure
 
 ```
