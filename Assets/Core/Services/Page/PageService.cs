@@ -69,7 +69,14 @@ namespace Core.Services.Page
             return page as TPage;
         }
 
-        public void Remove(PageView page) => _factory.Remove(page);
+        public void Remove(PageView page)
+        {
+            if(page is null)
+                return;
+
+            RemoveFromStack(page.Type);
+            _factory.Remove(page);
+        }
 
         private void Open(PageType type, bool isClosePage)
         {
@@ -98,6 +105,23 @@ namespace Core.Services.Page
                 
                 page.Show();
                 page.Enter();
+            }
+        }
+
+        private void RemoveFromStack(PageType type)
+        {
+            if(!_pages.Contains(type))
+                return;
+
+            PageType[] pages = _pages.ToArray();
+            _pages.Clear();
+
+            for (int i = pages.Length - 1; i >= 0; i--)
+            {
+                if (pages[i] != type)
+                {
+                    _pages.Push(pages[i]);
+                }
             }
         }
 
