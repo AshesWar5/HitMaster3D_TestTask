@@ -14,5 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scale: 1
   _speedBullet: 10
-  _prefab: {fileID: 170080190377488452, guid: f405b5dd69a086d40b2ae5eb3fbb1cfe, type: 3}
+  _prefab:
+    m_AssetGUID: f405b5dd69a086d40b2ae5eb3fbb1cfe
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
   _bulletConfig: {fileID: 11400000, guid: d23c995b8d3cafe4faf538e02a4055fd, type: 2}

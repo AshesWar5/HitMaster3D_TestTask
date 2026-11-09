@@ -1,4 +1,5 @@
-﻿using Core.Infrastructures.Factories.Game;
+﻿using Core.Infrastructures.AssetManagement;
+using Core.Infrastructures.Factories.Game;
 using Core.Logic.Bullet;
 using Core.Logic.Enemy;
 using Core.Logic.Gun;
@@ -12,7 +13,7 @@ namespace Core.Logic.Factories
     {
         PlayerComponent CreatePlayer(Vector2 pos, PlayerConfig config);
 
-        LevelComponent CreateLevel();
+        LevelComponent CreateLevel(ComponentReference<LevelComponent> prefab);
 
         TEnemy CreateEnemy<TEnemy>(EnemyConfig config, Vector3 position, int idBattlePlace)
             where TEnemy : EnemyComponent;

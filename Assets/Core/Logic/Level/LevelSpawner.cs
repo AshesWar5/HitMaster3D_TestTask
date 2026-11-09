@@ -1,13 +1,16 @@
-﻿using Core.Logic.Factories;
-using Core.Logic.Player;
+﻿using Core.Infrastructures.AssetManagement;
+using Core.Logic.Factories;
 using Core.Logic.Spawner;
 
 namespace Core.Logic.Level
 {
     public sealed class LevelSpawner : ObjectSpawner<LevelComponent>
     {
-        public LevelSpawner(IGameFactory gameFactory) : base(gameFactory) { }
+        private readonly ComponentReference<LevelComponent> _prefab;
 
-        protected override LevelComponent CreateInternal() => _gameFactory.CreateLevel();
+        public LevelSpawner(IGameFactory gameFactory, ComponentReference<LevelComponent> prefab) :
+            base(gameFactory) => _prefab = prefab;
+
+        protected override LevelComponent CreateInternal() => _gameFactory.CreateLevel(_prefab);
     }
 }

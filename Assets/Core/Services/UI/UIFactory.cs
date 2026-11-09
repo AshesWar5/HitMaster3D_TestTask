@@ -34,7 +34,7 @@ namespace Core.Services.UI
                 return page as TypePage;
             }
             
-            var prefab = _assetProvider.Load<TypePage>(GetPathPage(type));
+            var prefab = GetPage<TypePage>(type);
             var instance = _assetInstantiator.Instantiate(prefab, parent, pos, Vector3.one);
             instance.Initialize();
             _pages.Add(type, instance);
@@ -44,7 +44,7 @@ namespace Core.Services.UI
         TTypeElement IUIElementFactory.Create<TTypeElement>(UIElementType type, Vector3 pos = new Vector3(),
             Transform parent = null)
         {
-            var prefab = _assetProvider.Load<TTypeElement>(GetPathElement(type));
+            var prefab = GetElement<TTypeElement>(type);
             TTypeElement instance = _assetInstantiator.Instantiate(prefab, parent, pos, Vector3.one);
             instance.Initialize();
             return instance;
@@ -67,22 +67,22 @@ namespace Core.Services.UI
             _assetInstantiator.Destroy(view.gameObject);
         }
 
-        private string GetPathPage(PageType type)
+        private TPage GetPage<TPage>(PageType type) where TPage : PageView
         {
             return type switch
             {
-                PageType.Game => AssetPath.GAME_PAGE,
-                PageType.Loading => AssetPath.LOADING_PAGE,
-                PageType.Error => AssetPath.ERROR_PAGE,
+                PageType.Game => _assetProvider.Get<TPage>(AssetAddress.GAME_PAGE),
+                PageType.Loading => _assetProvider.Load<TPage>(AssetPath.LOADING_PAGE),
+                PageType.Error => _assetProvider.Load<TPage>(AssetPath.ERROR_PAGE),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }
         
-        private string GetPathElement(UIElementType type)
+        private TElement GetElement<TElement>(UIElementType type) where TElement : ViewUI
         {
             return type switch
             {
-                UIElementType.HealthEnemy => AssetPath.HEALTH_ENEMY_UI_ELEMENT,
+                UIElementType.HealthEnemy => _assetProvider.Get<TElement>(AssetAddress.HEALTH_ENEMY_UI_ELEMENT),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }

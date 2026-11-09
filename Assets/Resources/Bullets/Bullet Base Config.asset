@@ -14,4 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scale: 0.1
   _damage: 1
-  _prefab: {fileID: 6972023254395366543, guid: 3bd537a156a1e9e4c98d682adbe63888, type: 3}
+  _prefab:
+    m_AssetGUID: 3bd537a156a1e9e4c98d682adbe63888
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0

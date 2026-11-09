@@ -18,19 +18,17 @@ namespace Core.Logic.Factories
         private readonly IAssetInstantiator _assetInstantiator;
         private readonly IUpdatingService _updatingService;
         private readonly IFixedUpdatingService _fixedUpdatingService;
-        private readonly LevelsConfig _levelsConfig;
         private readonly IUIElementFactory _uiElementFactory;
         private readonly ILoggerService _logger;
 
         public GameFactory(IAssetProvider assetProvider, IAssetInstantiator assetInstantiator,
             IUpdatingService updatingService, IFixedUpdatingService fixedUpdatingService,
-            LevelsConfig levelsConfig, IUIElementFactory uiElementFactory, ILoggerService logger)
+            IUIElementFactory uiElementFactory, ILoggerService logger)
         {
             _assetProvider = assetProvider;
             _assetInstantiator = assetInstantiator;
             _updatingService = updatingService;
             _fixedUpdatingService = fixedUpdatingService;
-            _levelsConfig = levelsConfig;
             _uiElementFactory = uiElementFactory;
             _logger = logger;
         }
@@ -38,7 +36,7 @@ namespace Core.Logic.Factories
         public PlayerComponent CreatePlayer(Vector2 pos, PlayerConfig config)
         {
             var scaleVector = new Vector3(config.Scale, config.Scale, config.Scale);
-            var prefab = _assetProvider.Load<PlayerComponent>(AssetPath.PLAYER);
+            var prefab = _assetProvider.Get(config.Prefab);
             var player = _assetInstantiator.Instantiate(prefab, null, pos, scaleVector);
             
             var stateMachine = new PlayerStateMachine(new PlayerStateFactory(), _logger, _updatingService,
@@ -58,10 +56,9 @@ namespace Core.Logic.Factories
             return player;
         }
 
-        public LevelComponent CreateLevel()
+        public LevelComponent CreateLevel(ComponentReference<LevelComponent> prefab)
         {
-            int index = Random.Range(0, _levelsConfig.Levels.Length);
-            LevelComponent instance = _assetInstantiator.Instantiate(_levelsConfig.Levels[index], null,
+            LevelComponent instance = _assetInstantiator.Instantiate(_assetProvider.Get(prefab), null,
                 Vector3.zero, Vector3.one);
             instance.Initialize();
             instance.Enter();
@@ -75,7 +72,8 @@ namespace Core.Logic.Factories
             where TEnemy : EnemyComponent
         {
             Vector3 scale = new Vector3(config.Scale, config.Scale, config.Scale);
-            var enemy = _assetInstantiator.Instantiate(config.Prefab, null, position, scale).GetComponent<TEnemy>();
+            var prefab = _assetProvider.Get(config.Prefab);
+            var enemy = _assetInstantiator.Instantiate(prefab, null, position, scale).GetComponent<TEnemy>();
             
             var stateMachine = new EnemyStateMachine(new EnemyStateFactory(this), _logger, _updatingService,
                 _fixedUpdatingService, enemy);
@@ -101,7 +99,8 @@ namespace Core.Logic.Factories
             where TGun : GunComponent
         {
             Vector3 scale = new Vector3(config.Scale, config.Scale, config.Scale);
-            var gun = _assetInstantiator.Instantiate(config.Prefab, parent, position, scale).GetComponent<TGun>();
+            var prefab = _assetProvider.Get(config.Prefab);
+            var gun = _assetInstantiator.Instantiate(prefab, parent, position, scale).GetComponent<TGun>();
             gun.transform.eulerAngles = rotation;
             
             gun.SetDataByBullet(config.SpeedBullet, config.BulletConfig);
@@ -117,7 +116,8 @@ namespace Core.Logic.Factories
             where TBullet : BulletComponent
         {
             Vector3 scale = new Vector3(config.Scale, config.Scale, config.Scale);
-            var bullet = _assetInstantiator.Instantiate(config.Prefab, null, position, scale).GetComponent<TBullet>();
+            var prefab = _assetProvider.Get(config.Prefab);
+            var bullet = _assetInstantiator.Instantiate(prefab, null, position, scale).GetComponent<TBullet>();
             
             bullet.SetDamageValue(config.Damage);
             bullet.Initialize();

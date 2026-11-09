@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Core.Infrastructures.AssetManagement;
+using UnityEngine;
 
 namespace Core.Logic.Enemy
 {
@@ -7,10 +8,10 @@ namespace Core.Logic.Enemy
     {
         [SerializeField] private float _scale = 1;
         [SerializeField] private float _health = 10;
-        [SerializeField] private EnemyComponent _prefab;
+        [SerializeField] private ComponentReference<EnemyComponent> _prefab;
         
         public float Scale => _scale;
         public float Health => _health;
-        public EnemyComponent Prefab => _prefab;
+        public ComponentReference<EnemyComponent> Prefab => _prefab;
     }
 }

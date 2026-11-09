@@ -1,4 +1,5 @@
-﻿using Core.Logic.Bullet;
+﻿using Core.Infrastructures.AssetManagement;
+using Core.Logic.Bullet;
 using UnityEngine;
 
 namespace Core.Logic.Gun
@@ -9,12 +10,12 @@ namespace Core.Logic.Gun
         [SerializeField] private float _scale = 1;
         [SerializeField, Tooltip("This is the speed at which the cartridge flies.")]
         private float _speedBullet;
-        [SerializeField] private GunComponent _prefab;
+        [SerializeField] private ComponentReference<GunComponent> _prefab;
         [SerializeField] private BulletConfig _bulletConfig;
 
         public float Scale => _scale;
         public float SpeedBullet => _speedBullet;
-        public GunComponent Prefab => _prefab;
+        public ComponentReference<GunComponent> Prefab => _prefab;
         public BulletConfig BulletConfig => _bulletConfig;
     }
 }

@@ -1,15 +1,17 @@
-﻿namespace Core.Infrastructures.GameFlow
+﻿using Cysharp.Threading.Tasks;
+
+namespace Core.Infrastructures.GameFlow
 {
     public abstract class GameFlowManager : IGameFlow
     {
         protected bool _isStartedGame { get; private set; }
         
-        public void StartGame()
+        public async UniTask StartGame()
         {
             if(_isStartedGame)
                 return;
             
-            OnStartGameInternal();
+            await OnStartGameInternal();
 
             _isStartedGame = true;
         }
@@ -40,7 +42,7 @@
             OnFixedUpdatingGameInternal();
         }
 
-        protected abstract void OnStartGameInternal();
+        protected abstract UniTask OnStartGameInternal();
         
         protected abstract void OnStopGameInternal();
         

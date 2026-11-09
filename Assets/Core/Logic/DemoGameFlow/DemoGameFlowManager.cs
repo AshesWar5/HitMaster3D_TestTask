@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Core.Infrastructures.AssetManagement;
 using Core.Infrastructures.GameFlow;
 using Core.Logic.Battle;
 using Core.Logic.Camera;
@@ -6,7 +7,9 @@ using Core.Logic.Factories;
 using Core.Logic.Game;
 using Core.Logic.Level;
 using Core.Logic.Player;
+using Core.Services.ContentLoading;
 using Core.Services.Page;
+using Cysharp.Threading.Tasks;
 
 namespace Core.Logic.DemoGameFlow
 {
@@ -17,6 +20,9 @@ namespace Core.Logic.DemoGameFlow
         private readonly PlayerConfig _playerConfig;
         private readonly IPageService _pageService;
         private readonly IGameRestart _gameRestart;
+        private readonly ILevelSelector _levelSelector;
+        private readonly IContentLoadingService _contentLoading;
+        private readonly IAssetProvider _assetProvider;
 
         private LevelSpawner _levelSpawner;
         private PlayerSpawner _playerSpawner;
@@ -24,20 +30,28 @@ namespace Core.Logic.DemoGameFlow
         private GamePageHandler _gamePageHandler;
         private BattleManager _battleManager;
         private GamePageView _gamePageView;
+        private LevelData _level;
 
         public DemoGameFlowManager(CameraFollow cameraFollow, IGameFactory gameFactory,
-            PlayerConfig playerConfig, IPageService pageService, IGameRestart gameRestart)
+            PlayerConfig playerConfig, IPageService pageService, IGameRestart gameRestart,
+            ILevelSelector levelSelector, IContentLoadingService contentLoading, IAssetProvider assetProvider)
         {
             _cameraFollow = cameraFollow;
             _gameFactory = gameFactory;
             _playerConfig = playerConfig;
             _pageService = pageService;
             _gameRestart = gameRestart;
+            _levelSelector = levelSelector;
+            _contentLoading = contentLoading;
+            _assetProvider = assetProvider;
         }
 
-        protected override void OnStartGameInternal()
+        protected override async UniTask OnStartGameInternal()
         {
-            _levelSpawner = new LevelSpawner(_gameFactory);
+            _level = _levelSelector.Select();
+            await _contentLoading.LoadAsync(_level.Label);
+
+            _levelSpawner = new LevelSpawner(_gameFactory, _level.Prefab);
             LevelComponent level = _levelSpawner.Create();
 
             _playerSpawner = new PlayerSpawner(_gameFactory, _playerConfig, level.PlayerPoint);
@@ -66,6 +80,7 @@ namespace Core.Logic.DemoGameFlow
             _playerSpawner.Remove();
             _levelSpawner.Remove();
             _pageService.Remove(_gamePageView);
+            _assetProvider.Release(_level.Label);
         }
 
         private void OnBattleCompleted() =>

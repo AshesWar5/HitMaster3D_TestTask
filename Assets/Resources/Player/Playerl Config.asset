@@ -14,4 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scale: 0.5
   _speed: 10
+  _prefab:
+    m_AssetGUID: 4041de07a124e8b4a8af5e7cdf711a26
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
   _gun: {fileID: 11400000, guid: 7ba870e97ff4a0746a0172f91822c69b, type: 2}

@@ -3,6 +3,7 @@ using Core.Infrastructures.GameFlow;
 using Core.Logic.Camera;
 using Core.Logic.DemoGameFlow;
 using Core.Logic.Factories;
+using Core.Logic.Level;
 using UnityEngine;
 using Zenject;
 
@@ -17,6 +18,7 @@ namespace Core.Logic.Installers
             BindCameraFollow();
             BindAssetInstantiator();
             BindGameFactory();
+            BindLevelSelector();
             BindGameFlowManager();
         }
 
@@ -25,6 +27,11 @@ namespace Core.Logic.Installers
             Container.Bind<IGameFactory>().To<GameFactory>().AsSingle();
         }
         
+        private void BindLevelSelector()
+        {
+            Container.Bind<ILevelSelector>().To<RandomLevelSelector>().AsSingle();
+        }
+
         private void BindAssetInstantiator()
         {
             Container

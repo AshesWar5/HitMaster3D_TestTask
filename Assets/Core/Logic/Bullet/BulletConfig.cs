@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Core.Infrastructures.AssetManagement;
+using UnityEngine;
 
 namespace Core.Logic.Bullet
 {
@@ -7,10 +8,10 @@ namespace Core.Logic.Bullet
     {
         [SerializeField] private float _scale = 1;
         [SerializeField] private float _damage = 1;
-        [SerializeField] private BulletComponent _prefab;
+        [SerializeField] private ComponentReference<BulletComponent> _prefab;
 
         public float Scale => _scale;
         public float Damage => _damage;
-        public BulletComponent Prefab => _prefab;
+        public ComponentReference<BulletComponent> Prefab => _prefab;
     }
 }

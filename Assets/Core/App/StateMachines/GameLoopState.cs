@@ -9,11 +9,11 @@ namespace Core.App.StateMachines
         
         public GameLoopState(GameStateMachine stateMachine) : base(stateMachine) { }
 
-        public void Enter(IGameFlow gameFlow)
+        public async void Enter(IGameFlow gameFlow)
         {
             _currentGameFlow = gameFlow;
             
-            gameFlow.StartGame();
+            await gameFlow.StartGame();
         }
 
         public void Exit() =>

@@ -1,8 +1,10 @@
-﻿namespace Core.Infrastructures.GameFlow
+﻿using Cysharp.Threading.Tasks;
+
+namespace Core.Infrastructures.GameFlow
 {
     public interface IGameFlow : IUpdating, IFixedUpdating
     {
-        void StartGame();
+        UniTask StartGame();
 
         void StopGame();
     }
