@@ -4,6 +4,8 @@
 
 A hit-master style shooter prototype. The player runs between battle points and shoots enemies by tap or click. When the player clears a point, they move on to the next one. After the last point the level restarts.
 
+![Gameplay](Docs/Gameplay.gif)
+
 **Stack:** Unity 6 (6000.4.3f1), URP, Zenject (Extenject), UniTask, Addressables.
 
 ## Running
