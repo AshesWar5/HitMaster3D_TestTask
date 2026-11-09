@@ -6,6 +6,7 @@ using Core.Logic.Enemy;
 using Core.Logic.Level;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
+using UnityEditor.AddressableAssets.Build.AnalyzeRules;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.AddressableAssets.Settings.GroupSchemas;
 using UnityEngine;
@@ -22,6 +23,7 @@ namespace Core.Editor.ContentSetup
         private const string CORE_GROUP = "Core";
         private const string UI_GROUP = "UI";
         private const string ENEMIES_GROUP = "Enemies";
+        private const string SHARED_GROUP = "Shared";
         private const string LEVEL_LABEL_PREFIX = "level_";
 
         [MenuItem("Tools/Addressables/Setup")]
@@ -32,6 +34,7 @@ namespace Core.Editor.ContentSetup
             SetupFolder(settings, CORE_FOLDER, GetOrCreateGroup(settings, CORE_GROUP), AssetLabel.CORE);
             SetupFolder(settings, UI_FOLDER, GetOrCreateGroup(settings, UI_GROUP), AssetLabel.UI);
             SetupLevels(settings);
+            SetupShared(settings);
 
             AssetDatabase.SaveAssets();
             Debug.Log("AddressablesSetup: done");
@@ -118,6 +121,24 @@ namespace Core.Editor.ContentSetup
                     entry.SetLabel(label, true, true);
                 }
             }
+        }
+
+        private static void SetupShared(AddressableAssetSettings settings)
+        {
+            AddressableAssetGroup group = GetOrCreateGroup(settings, SHARED_GROUP);
+            var rule = new CheckBundleDupeDependencies();
+
+            foreach (AnalyzeRule.AnalyzeResult result in rule.RefreshAnalysis(settings))
+            {
+                string path = result.resultName.Substring(result.resultName.LastIndexOf(':') + 1);
+                string guid = AssetDatabase.AssetPathToGUID(path);
+                if(string.IsNullOrEmpty(guid))
+                    continue;
+
+                settings.CreateOrMoveEntry(guid, group);
+            }
+
+            rule.ClearAnalysis();
         }
 
         private static AddressableAssetEntry CreateEntry(AddressableAssetSettings settings, string guid,
